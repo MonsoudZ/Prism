@@ -15,18 +15,12 @@
 		99A085632E90628B0092257B /* LibraryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0855E2E90611C0092257B /* LibraryRepository.swift */; };
 		99A085642E9062900092257B /* LibraryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0855F2E9061290092257B /* LibraryItem.swift */; };
 		99A0857D2E9065F70092257B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0857C2E9065F50092257B /* Logger.swift */; };
-		99A0857F2E90660C0092257B /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0857E2E90660A0092257B /* AppError.swift */; };
 		99A085812E9067450092257B /* ContentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A085752E9065700092257B /* ContentContainer.swift */; };
 		99A085882E906D0E0092257B /* FullLayoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A085872E906D0C0092257B /* FullLayoutView.swift */; };
 		99A0858A2E906D1B0092257B /* CompactLayoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A085892E906D180092257B /* CompactLayoutView.swift */; };
-		99A085942E90E21D0092257B /* NotesPersistenceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A085932E90E21A0092257B /* NotesPersistenceProtocol.swift */; };
-		99A085982E90E2330092257B /* EnhancedPersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A085972E90E2300092257B /* EnhancedPersistenceService.swift */; };
-		99A0859B2E90E2680092257B /* BackgroundPersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0859A2E90E2650092257B /* BackgroundPersistenceService.swift */; };
-		99A0859D2E90E2730092257B /* SimpleBackgroundPersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0859C2E90E2710092257B /* SimpleBackgroundPersistenceService.swift */; };
 		99A085A32E90E3630092257B /* SearchIndexManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A085A22E90E3600092257B /* SearchIndexManager.swift */; };
 		99A085A52E90E37E0092257B /* PDFPageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A085A42E90E37B0092257B /* PDFPageManager.swift */; };
 		99A085AF2E90E5590092257B /* FileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A085AE2E90E5560092257B /* FileService.swift */; };
-		99A085B22E90E5F20092257B /* ErrorRecoveryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A085B12E90E5EF0092257B /* ErrorRecoveryService.swift */; };
 		99A085B52E90E60C0092257B /* CrashReportingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A085B42E90E6090092257B /* CrashReportingService.swift */; };
 		99A085B92E90E64B0092257B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A085B82E90E6480092257B /* Extensions.swift */; };
 		99A085BB2E90E6570092257B /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A085BA2E90E6540092257B /* Shell.swift */; };
@@ -64,10 +58,8 @@
 		99A086472E930BDE0092257B /* NotesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A086462E930BDB0092257B /* NotesRepository.swift */; };
 		99A0864A2E930BFA0092257B /* NotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A086492E930BF80092257B /* NotesViewModel.swift */; };
 		99A0864D2E930C100092257B /* NotesPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0864C2E930C0D0092257B /* NotesPane.swift */; };
-		99A0864F2E930C1B0092257B /* NoteRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0864E2E930C180092257B /* NoteRow.swift */; };
 		99A086522E94ADD90092257B /* PDFService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A086512E94ADD60092257B /* PDFService.swift */; };
 		99A086542E94ADE90092257B /* PDFModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A086532E94ADE60092257B /* PDFModels.swift */; };
-		99A086562E94ADF80092257B /* PDFPersistenceKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A086552E94ADF50092257B /* PDFPersistenceKeys.swift */; };
 		99A086582E94CB440092257B /* PersistenceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A086572E94CB400092257B /* PersistenceModels.swift */; };
 		99A0865A2E9556680092257B /* PDFViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A086592E9556630092257B /* PDFViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -106,7 +98,6 @@
 		99A085702E90650F0092257B /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		99A085752E9065700092257B /* ContentContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentContainer.swift; sourceTree = "<group>"; };
 		99A0857C2E9065F50092257B /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
-		99A0857E2E90660A0092257B /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		99A085872E906D0C0092257B /* FullLayoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullLayoutView.swift; sourceTree = "<group>"; };
 		99A085892E906D180092257B /* CompactLayoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactLayoutView.swift; sourceTree = "<group>"; };
 		99A0858C2E90DC740092257B /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
@@ -114,14 +105,9 @@
 		99A0858E2E90DC8C0092257B /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		99A085902E90DCA70092257B /* ExportOptions-Dev.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ExportOptions-Dev.plist"; sourceTree = "<group>"; };
 		99A085912E90DCB60092257B /* ExportOptions-Prod.plist  */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ExportOptions-Prod.plist "; sourceTree = "<group>"; };
-		99A085932E90E21A0092257B /* NotesPersistenceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesPersistenceProtocol.swift; sourceTree = "<group>"; };
-		99A085972E90E2300092257B /* EnhancedPersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnhancedPersistenceService.swift; sourceTree = "<group>"; };
-		99A0859A2E90E2650092257B /* BackgroundPersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundPersistenceService.swift; sourceTree = "<group>"; };
-		99A0859C2E90E2710092257B /* SimpleBackgroundPersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleBackgroundPersistenceService.swift; sourceTree = "<group>"; };
 		99A085A22E90E3600092257B /* SearchIndexManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIndexManager.swift; sourceTree = "<group>"; };
 		99A085A42E90E37B0092257B /* PDFPageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFPageManager.swift; sourceTree = "<group>"; };
 		99A085AE2E90E5560092257B /* FileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileService.swift; sourceTree = "<group>"; };
-		99A085B12E90E5EF0092257B /* ErrorRecoveryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorRecoveryService.swift; sourceTree = "<group>"; };
 		99A085B42E90E6090092257B /* CrashReportingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrashReportingService.swift; sourceTree = "<group>"; };
 		99A085B82E90E6480092257B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		99A085BA2E90E6540092257B /* Shell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shell.swift; sourceTree = "<group>"; };
@@ -180,10 +166,8 @@
 		99A086462E930BDB0092257B /* NotesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesRepository.swift; sourceTree = "<group>"; };
 		99A086492E930BF80092257B /* NotesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewModel.swift; sourceTree = "<group>"; };
 		99A0864C2E930C0D0092257B /* NotesPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesPane.swift; sourceTree = "<group>"; };
-		99A0864E2E930C180092257B /* NoteRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRow.swift; sourceTree = "<group>"; };
 		99A086512E94ADD60092257B /* PDFService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFService.swift; sourceTree = "<group>"; };
 		99A086532E94ADE60092257B /* PDFModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFModels.swift; sourceTree = "<group>"; };
-		99A086552E94ADF50092257B /* PDFPersistenceKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFPersistenceKeys.swift; sourceTree = "<group>"; };
 		99A086572E94CB400092257B /* PersistenceModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceModels.swift; sourceTree = "<group>"; };
 		99A086592E9556630092257B /* PDFViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -271,7 +255,6 @@
 				99A086502E94ADC50092257B /* PDF */,
 				99A085542E9060790092257B /* Persistence */,
 				99A085762E90659E0092257B /* Files */,
-				99A085772E9065B60092257B /* ErrorHandling */,
 				99A085782E9065C10092257B /* Logging */,
 				99A085B72E90E6310092257B /* Utilities */,
 			);
@@ -320,10 +303,7 @@
 			isa = PBXGroup;
 			children = (
 				99A086572E94CB400092257B /* PersistenceModels.swift */,
-				99A085932E90E21A0092257B /* NotesPersistenceProtocol.swift */,
 				99A085552E9060860092257B /* PersistenceService.swift */,
-				99A085972E90E2300092257B /* EnhancedPersistenceService.swift */,
-				99A085992E90E2450092257B /* Background */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -448,15 +428,6 @@
 			path = Files;
 			sourceTree = "<group>";
 		};
-		99A085772E9065B60092257B /* ErrorHandling */ = {
-			isa = PBXGroup;
-			children = (
-				99A0857E2E90660A0092257B /* AppError.swift */,
-				99A085B12E90E5EF0092257B /* ErrorRecoveryService.swift */,
-			);
-			path = ErrorHandling;
-			sourceTree = "<group>";
-		};
 		99A085782E9065C10092257B /* Logging */ = {
 			isa = PBXGroup;
 			children = (
@@ -503,15 +474,6 @@
 				99A085492E905DE00092257B /* Features */,
 			);
 			path = Sources;
-			sourceTree = "<group>";
-		};
-		99A085992E90E2450092257B /* Background */ = {
-			isa = PBXGroup;
-			children = (
-				99A0859A2E90E2650092257B /* BackgroundPersistenceService.swift */,
-				99A0859C2E90E2710092257B /* SimpleBackgroundPersistenceService.swift */,
-			);
-			path = Background;
 			sourceTree = "<group>";
 		};
 		99A085B72E90E6310092257B /* Utilities */ = {
@@ -627,8 +589,8 @@
 		99A085F22E90ED9D0092257B /* PDF */ = {
 			isa = PBXGroup;
 			children = (
-				99A0863A2E9304260092257B /* Views */,
 				99A086352E9303D30092257B /* ViewModels */,
+				99A0863A2E9304260092257B /* Views */,
 			);
 			path = PDF;
 			sourceTree = "<group>";
@@ -826,7 +788,6 @@
 		99A0864B2E930C050092257B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				99A0864E2E930C180092257B /* NoteRow.swift */,
 				99A0864C2E930C0D0092257B /* NotesPane.swift */,
 			);
 			path = Views;
@@ -838,7 +799,6 @@
 				99A086592E9556630092257B /* PDFViewModel.swift */,
 				99A086512E94ADD60092257B /* PDFService.swift */,
 				99A086532E94ADE60092257B /* PDFModels.swift */,
-				99A086552E94ADF50092257B /* PDFPersistenceKeys.swift */,
 			);
 			path = PDF;
 			sourceTree = "<group>";
@@ -988,12 +948,8 @@
 				99A085B52E90E60C0092257B /* CrashReportingService.swift in Sources */,
 				99A085CC2E90E9DC0092257B /* LoadingStates.swift in Sources */,
 				99A085532E9060540092257B /* CompositionRoot.swift in Sources */,
-				99A0859D2E90E2730092257B /* SimpleBackgroundPersistenceService.swift in Sources */,
-				99A085982E90E2330092257B /* EnhancedPersistenceService.swift in Sources */,
 				99A085602E90627D0092257B /* PersistenceService.swift in Sources */,
 				99A086012E920A720092257B /* CodeViewModel.swift in Sources */,
-				99A0864F2E930C1B0092257B /* NoteRow.swift in Sources */,
-				99A0857F2E90660C0092257B /* AppError.swift in Sources */,
 				99A085C32E90E6970092257B /* ConsoleFilter.swift in Sources */,
 				99A086412E9304670092257B /* PDFViewRepresentable.swift in Sources */,
 				99A0860D2E920C5B0092257B /* LibraryEnvelope.swift in Sources */,
@@ -1012,14 +968,12 @@
 				99A0863C2E9304310092257B /* PDFPane.swift in Sources */,
 				99A0865A2E9556680092257B /* PDFViewModel.swift in Sources */,
 				99A0857D2E9065F70092257B /* Logger.swift in Sources */,
-				99A085942E90E21D0092257B /* NotesPersistenceProtocol.swift in Sources */,
 				99A0864D2E930C100092257B /* NotesPane.swift in Sources */,
 				99A086152E920CBB0092257B /* LibraryEmptyState.swift in Sources */,
 				99A086522E94ADD90092257B /* PDFService.swift in Sources */,
 				99A085512E90602F0092257B /* PrismApp.swift in Sources */,
 				99A085BF2E90E6800092257B /* Environment.swift in Sources */,
 				99A085AF2E90E5590092257B /* FileService.swift in Sources */,
-				99A085B22E90E5F20092257B /* ErrorRecoveryService.swift in Sources */,
 				99A0864A2E930BFA0092257B /* NotesViewModel.swift in Sources */,
 				99A085632E90628B0092257B /* LibraryRepository.swift in Sources */,
 				99A085882E906D0E0092257B /* FullLayoutView.swift in Sources */,
@@ -1039,8 +993,6 @@
 				99A0861F2E9210060092257B /* WebPane.swift in Sources */,
 				99A086582E94CB440092257B /* PersistenceModels.swift in Sources */,
 				99A086252E9210400092257B /* SketchViewModel.swift in Sources */,
-				99A086562E94ADF80092257B /* PDFPersistenceKeys.swift in Sources */,
-				99A0859B2E90E2680092257B /* BackgroundPersistenceService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
