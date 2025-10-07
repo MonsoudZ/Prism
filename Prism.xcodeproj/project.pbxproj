@@ -69,6 +69,7 @@
 		99A086542E94ADE90092257B /* PDFModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A086532E94ADE60092257B /* PDFModels.swift */; };
 		99A086562E94ADF80092257B /* PDFPersistenceKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A086552E94ADF50092257B /* PDFPersistenceKeys.swift */; };
 		99A086582E94CB440092257B /* PersistenceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A086572E94CB400092257B /* PersistenceModels.swift */; };
+		99A0865A2E9556680092257B /* PDFViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A086592E9556630092257B /* PDFViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -184,6 +185,7 @@
 		99A086532E94ADE60092257B /* PDFModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFModels.swift; sourceTree = "<group>"; };
 		99A086552E94ADF50092257B /* PDFPersistenceKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFPersistenceKeys.swift; sourceTree = "<group>"; };
 		99A086572E94CB400092257B /* PersistenceModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceModels.swift; sourceTree = "<group>"; };
+		99A086592E9556630092257B /* PDFViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -833,6 +835,7 @@
 		99A086502E94ADC50092257B /* PDF */ = {
 			isa = PBXGroup;
 			children = (
+				99A086592E9556630092257B /* PDFViewModel.swift */,
 				99A086512E94ADD60092257B /* PDFService.swift */,
 				99A086532E94ADE60092257B /* PDFModels.swift */,
 				99A086552E94ADF50092257B /* PDFPersistenceKeys.swift */,
@@ -1007,6 +1010,7 @@
 				99A085BD2E90E6680092257B /* ImageProcessingManager.swift in Sources */,
 				99A086192E920CD90092257B /* LibraryPane.swift in Sources */,
 				99A0863C2E9304310092257B /* PDFPane.swift in Sources */,
+				99A0865A2E9556680092257B /* PDFViewModel.swift in Sources */,
 				99A0857D2E9065F70092257B /* Logger.swift in Sources */,
 				99A085942E90E21D0092257B /* NotesPersistenceProtocol.swift in Sources */,
 				99A0864D2E930C100092257B /* NotesPane.swift in Sources */,
