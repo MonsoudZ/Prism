@@ -68,6 +68,7 @@
 		99A086522E94ADD90092257B /* PDFService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A086512E94ADD60092257B /* PDFService.swift */; };
 		99A086542E94ADE90092257B /* PDFModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A086532E94ADE60092257B /* PDFModels.swift */; };
 		99A086562E94ADF80092257B /* PDFPersistenceKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A086552E94ADF50092257B /* PDFPersistenceKeys.swift */; };
+		99A086582E94CB440092257B /* PersistenceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A086572E94CB400092257B /* PersistenceModels.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -182,6 +183,7 @@
 		99A086512E94ADD60092257B /* PDFService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFService.swift; sourceTree = "<group>"; };
 		99A086532E94ADE60092257B /* PDFModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFModels.swift; sourceTree = "<group>"; };
 		99A086552E94ADF50092257B /* PDFPersistenceKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFPersistenceKeys.swift; sourceTree = "<group>"; };
+		99A086572E94CB400092257B /* PersistenceModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceModels.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -315,6 +317,7 @@
 		99A085542E9060790092257B /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
+				99A086572E94CB400092257B /* PersistenceModels.swift */,
 				99A085932E90E21A0092257B /* NotesPersistenceProtocol.swift */,
 				99A085552E9060860092257B /* PersistenceService.swift */,
 				99A085972E90E2300092257B /* EnhancedPersistenceService.swift */,
@@ -1030,6 +1033,7 @@
 				99A085D12E90EA130092257B /* AccessibilityEnhancer.swift in Sources */,
 				99A085C52E90E6A40092257B /* LargePDFPerformanceMonitor.swift in Sources */,
 				99A0861F2E9210060092257B /* WebPane.swift in Sources */,
+				99A086582E94CB440092257B /* PersistenceModels.swift in Sources */,
 				99A086252E9210400092257B /* SketchViewModel.swift in Sources */,
 				99A086562E94ADF80092257B /* PDFPersistenceKeys.swift in Sources */,
 				99A0859B2E90E2680092257B /* BackgroundPersistenceService.swift in Sources */,
