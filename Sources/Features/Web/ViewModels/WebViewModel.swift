@@ -13,8 +13,12 @@
 //
 
 import Foundation
+import Combine
 import SwiftUI
 import AppKit
+
+// Disambiguate the type name so compiler knows which one we mean
+private let loadingManager = WebLoadingStateManager.shared
 
 @MainActor
 final class WebViewModel: ObservableObject {
@@ -35,6 +39,11 @@ final class WebViewModel: ObservableObject {
 
     /// Saved bookmarks.
     @Published private(set) var bookmarks: [URL] = []
+
+    // MARK: - Singletons (typed to avoid 'shared' ambiguity)
+
+    private let loadingManager: WebLoadingStateManager = .shared
+
 
     // MARK: - Persistence keys
 
@@ -63,14 +72,14 @@ final class WebViewModel: ObservableObject {
         let input = addressText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !input.isEmpty else { return }
 
-        LoadingStateManager.shared.startWebLoading("Loading webpage…")
+        loadingManager.startWebLoading("Loading webpage…")
 
         if let url = normalizeURL(from: input) {
             openURL(url, recordInHistory: true)
         } else if let searchURL = makeSearchURL(query: input) {
             openURL(searchURL, recordInHistory: true)
         } else {
-            LoadingStateManager.shared.stopWebLoading()
+            loadingManager.stopWebLoading()
         }
     }
 
@@ -85,7 +94,7 @@ final class WebViewModel: ObservableObject {
 
     /// The web view calls this upon navigation completion.
     func onWebViewNavigated(to url: URL?) {
-        LoadingStateManager.shared.stopWebLoading()
+        loadingManager.stopWebLoading()
         guard let u = url else { return }
 
         // Avoid noisy duplicates

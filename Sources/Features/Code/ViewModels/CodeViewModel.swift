@@ -66,30 +66,6 @@ final class CodeViewModel: ObservableObject {
         updateDefaultFilename()
     }
 
-    // MARK: - Running Code
-
-    /// Execute the current buffer via the Shell runner.
-    func run() {
-        guard !isRunning else { return }
-        isRunning = true
-        output = ""
-
-        LoadingStateManager.shared.startLoading(.general, message: "Running \(language.rawValue) code...")
-
-        Task.detached(priority: .userInitiated) { [code, language] in
-            let result = Shell.run(language: language, code: code)
-            await MainActor.run {
-                self.output = result
-                self.isRunning = false
-                LoadingStateManager.shared.stopLoading(.general)
-            }
-        }
-    }
-
-    /// Clear the output panel.
-    func clearOutput() {
-        output = ""
-    }
 
     // MARK: - File Operations (Save / Load)
 

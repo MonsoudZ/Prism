@@ -2,15 +2,6 @@
 //  SketchViewModel.swift
 //  Prism
 //
-//  A macOS-friendly ViewModel that coordinates the Sketch model with SwiftUI views.
-//  - Holds the active tool, color, width, opacity, and selected page
-//  - Exposes begin/move/end stroke methods for your canvas gesture handlers
-//  - Provides undo/redo, clear page, page management
-//  - Handles autosave with debounce and atomic writes
-//  - Supports loading/saving documents, and anchoring to a PDF page
-//
-//  Created by Monsoud Zanaty on 10/4/25.
-//
 
 import Foundation
 import Combine
@@ -18,7 +9,7 @@ import Combine
 @MainActor
 public final class SketchViewModel: ObservableObject {
 
-    // MARK: - Published State (bind to SwiftUI)
+    // MARK: - Published State
     @Published public private(set) var store: SketchStore
     @Published public var currentPageID: UUID
     @Published public var activeTool: SketchTool = .pen
@@ -26,16 +17,13 @@ public final class SketchViewModel: ObservableObject {
     @Published public var strokeWidth: Double = 2.0
     @Published public var strokeOpacity: Double = 1.0
 
-    // UI helpers
     @Published public var isDrawing = false
     @Published public var isDirty = false
-    @Published public private(set) var fileURL: URL?  // where this doc is saved on disk
+    @Published public private(set) var fileURL: URL?
 
-    // Autosave
     @Published public var autosaveEnabled: Bool = true
     @Published public var autosaveDebounceSeconds: TimeInterval = 1.0
 
-    // MARK: - Private
     private var cancellables = Set<AnyCancellable>()
     private var saveDebounce: AnyCancellable?
 
@@ -45,15 +33,13 @@ public final class SketchViewModel: ObservableObject {
         let store = SketchStore(document: document)
         self.store = store
         self.fileURL = fileURL
-        self.currentPageID = store.document.pages.first?.id ?? UUID() // will be fixed by ensurePage()
-
+        self.currentPageID = store.document.pages.first?.id ?? UUID()
         ensurePage()
         wireAutosave()
     }
 
     // MARK: - Page Management
 
-    /// Ensure we have at least one page and currentPageID is valid
     private func ensurePage() {
         if store.document.pages.isEmpty {
             store.addPage(background: .blank, size: .letter)
@@ -71,7 +57,7 @@ public final class SketchViewModel: ObservableObject {
 
     public func removeCurrentPage() {
         let id = currentPageID
-        guard store.document.pages.count > 1 else { return } // keep at least one
+        guard store.document.pages.count > 1 else { return }
         store.removePage(id: id)
         currentPageID = store.document.pages.first!.id
         markDirty()
@@ -83,23 +69,15 @@ public final class SketchViewModel: ObservableObject {
     }
 
     public func setTitleForCurrentPage(_ title: String) {
-        guard let idx = store.pageIndex(for: currentPageID) else { return }
-        store.document.pages[idx].title = title
-        store.document.updatedAt = Date()
+        store.setPageTitle(pageID: currentPageID, title: title)
         markDirty()
     }
 
-    // MARK: - Drawing (hook these from your canvas gestures)
+    // MARK: - Drawing
 
     public func beginStroke(at x: Double, y: Double, pressure: Double? = nil, azimuth: Double? = nil, altitude: Double? = nil) {
         isDrawing = true
-        store.beginStroke(
-            on: currentPageID,
-            tool: activeTool,
-            color: strokeColor,
-            width: strokeWidth,
-            opacity: strokeOpacity
-        )
+        store.beginStroke(on: currentPageID, tool: activeTool, color: strokeColor, width: strokeWidth, opacity: strokeOpacity)
         appendPoint(at: x, y: y, pressure: pressure, azimuth: azimuth, altitude: altitude)
     }
 
@@ -123,15 +101,8 @@ public final class SketchViewModel: ObservableObject {
 
     // MARK: - Undo / Redo
 
-    public func undo() {
-        store.undo(on: currentPageID)
-        markDirty()
-    }
-
-    public func redo() {
-        store.redo(on: currentPageID)
-        markDirty()
-    }
+    public func undo() { store.undo(on: currentPageID); markDirty() }
+    public func redo() { store.redo(on: currentPageID); markDirty() }
 
     // MARK: - Tool Controls
 
@@ -140,24 +111,21 @@ public final class SketchViewModel: ObservableObject {
     public func setWidth(_ width: Double) { strokeWidth = max(0.1, width) }
     public func setOpacity(_ value: Double) { strokeOpacity = min(max(0.0, value), 1.0) }
 
-    // MARK: - PDF Anchoring (optional)
+    // MARK: - PDF Anchoring
 
     public func anchorToPDF(url: URL, pageIndex: Int) {
-        store.document.anchoredPDFURL = url
-        store.document.anchoredPDFPageIndex = pageIndex
+        store.setDocumentAnchor(url: url, pageIndex: pageIndex)
         markDirty()
     }
 
     public func clearPDFAnchor() {
-        store.document.anchoredPDFURL = nil
-        store.document.anchoredPDFPageIndex = nil
+        store.setDocumentAnchor(url: nil, pageIndex: nil)
         markDirty()
     }
 
     // MARK: - Autosave Wiring
 
     private func wireAutosave() {
-        // Any changes to the document trigger debounced autosave
         $store
             .map { _ in () }
             .merge(with:
@@ -167,9 +135,7 @@ public final class SketchViewModel: ObservableObject {
                 $strokeWidth.map { _ in () },
                 $strokeOpacity.map { _ in () }
             )
-            .sink { [weak self] _ in
-                self?.scheduleAutosave()
-            }
+            .sink { [weak self] _ in self?.scheduleAutosave() }
             .store(in: &cancellables)
     }
 
@@ -180,20 +146,12 @@ public final class SketchViewModel: ObservableObject {
         saveDebounce = Just(())
             .delay(for: .seconds(delay), scheduler: RunLoop.main)
             .sink { [weak self] in
-                Task { @MainActor in
-                    try? await self?.autosaveIfNeeded()
-                }
+                Task { @MainActor in try? await self?.autosaveIfNeeded() }
             }
     }
 
-    private func markDirty() {
-        isDirty = true
-        scheduleAutosave()
-    }
-
-    private func clearDirty() {
-        isDirty = false
-    }
+    private func markDirty() { isDirty = true; scheduleAutosave() }
+    private func clearDirty() { isDirty = false }
 
     // MARK: - Persistence
 
@@ -204,31 +162,30 @@ public final class SketchViewModel: ObservableObject {
         isDirty = true
     }
 
-    /// Load a document from disk.
     public func load(from url: URL) throws {
         let data = try Data(contentsOf: url)
         let doc = try SketchCodec.decode(data)
         store = SketchStore(document: doc)
-        currentPageID = store.document.pages.first?.id ?? {
-            let id = UUID()
+        if let id = store.document.pages.first?.id {
+            currentPageID = id
+        } else {
             store.addPage()
-            return store.document.pages.first!.id
-        }()
+            currentPageID = store.document.pages.first!.id
+        }
         fileURL = url
         clearDirty()
     }
 
-    /// Save to the existing fileURL or throw if missing.
     @discardableResult
     public func save() throws -> URL {
         guard let url = fileURL else {
-            throw NSError(domain: "SketchViewModel", code: 1, userInfo: [NSLocalizedDescriptionKey: "No file URL set for save(). Use save(to:) first."])
+            throw NSError(domain: "SketchViewModel", code: 1,
+                          userInfo: [NSLocalizedDescriptionKey: "No file URL set for save(). Use save(to:) first."])
         }
         try save(to: url)
         return url
     }
 
-    /// Save to a specific URL and adopt it as the working file.
     public func save(to url: URL) throws {
         let data = try SketchCodec.encode(store.document)
         try writeAtomically(data: data, to: url)
@@ -236,7 +193,6 @@ public final class SketchViewModel: ObservableObject {
         clearDirty()
     }
 
-    /// Debounced autosave if we have a fileURL and dirty changes.
     public func autosaveIfNeeded() async throws {
         guard isDirty, let url = fileURL else { return }
         let data = try SketchCodec.encode(store.document)
@@ -246,17 +202,15 @@ public final class SketchViewModel: ObservableObject {
 
     // MARK: - Atomic Write Helper
 
-    /// Ensures the file hits the disk atomically to reduce corruption risk.
     private func writeAtomically(data: Data, to url: URL) throws {
         let dir = url.deletingLastPathComponent()
         try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
 
         let tmpURL = dir.appendingPathComponent(".\(UUID().uuidString).tmp")
         try data.write(to: tmpURL, options: .atomic)
-        // Replace item to keep inode stable where possible
+
         _ = try? FileManager.default.replaceItemAt(url, withItemAt: tmpURL)
         if FileManager.default.fileExists(atPath: tmpURL.path) {
-            // If replace failed (older OS), move into place
             if FileManager.default.fileExists(atPath: url.path) {
                 try FileManager.default.removeItem(at: url)
             }
@@ -264,14 +218,12 @@ public final class SketchViewModel: ObservableObject {
         }
     }
 
-    // MARK: - Export Utilities (optional hooks)
+    // MARK: - Export
 
-    /// Hook to persist an externally rendered PNG (your canvas can render and pass data here).
     public func exportPNG(_ pngData: Data, to url: URL) throws {
         try writeAtomically(data: pngData, to: url)
     }
 
-    /// Convenient default filename for exports.
     public func suggestedExportNamePNG(for pageIndex: Int? = nil) -> String {
         let base = store.document.title.isEmpty ? "Sketch" : store.document.title
         if let i = pageIndex { return "\(base)-page-\(i + 1).png" }

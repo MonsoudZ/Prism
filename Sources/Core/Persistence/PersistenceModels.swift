@@ -1,4 +1,6 @@
 import Foundation
+import Combine  
+
 
 // MARK: - Document Models
 

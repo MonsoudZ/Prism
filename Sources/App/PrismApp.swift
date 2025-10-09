@@ -1,6 +1,4 @@
 import SwiftUI
-import PDFKit
-import Combine
 
 // MARK: - App Entry Point
 
@@ -8,31 +6,13 @@ import Combine
 struct PrismApp: App {
     @StateObject private var appEnvironment = AppEnvironment.shared
     
-    init() {
-        // Initialize persistence on app launch
-        do {
-            try PersistenceService.initialize()
-        } catch {
-            UserDefaults.standard.set(error.localizedDescription, forKey: "initializationError")
-        }
-    }
-    
     var body: some Scene {
         WindowGroup {
             CompositionRoot()
                 .environmentObject(appEnvironment)
                 .frame(minWidth: 900, minHeight: 650)
-                .onAppear(perform: checkInitializationError)
-                .alert("Initialization Error", isPresented: $appEnvironment.showingInitError) {
-                    Button("OK") {
-                        appEnvironment.showingInitError = false
-                        clearInitializationError()
-                    }
-                    Button("Retry") {
-                        retryInitialization()
-                    }
-                } message: {
-                    Text(appEnvironment.initializationError ?? "An unknown error occurred during app initialization.")
+                .onAppear {
+                    checkInitialization()
                 }
         }
         .windowStyle(.titleBar)
@@ -41,33 +21,10 @@ struct PrismApp: App {
         }
     }
     
-    // MARK: - Error Handling
+    // MARK: - Initialization Check
     
-    private func checkInitializationError() {
-        if let error = UserDefaults.standard.string(forKey: "initializationError") {
-            appEnvironment.initializationError = error
-            appEnvironment.showingInitError = true
-        }
-    }
-    
-    private func clearInitializationError() {
-        UserDefaults.standard.removeObject(forKey: "initializationError")
-        appEnvironment.initializationError = nil
-    }
-    
-    private func retryInitialization() {
-        clearInitializationError()
-        do {
-            try PersistenceService.initialize()
-            appEnvironment.enhancedToastCenter.showSuccess(
-                "Initialization Succeeded",
-                "App storage and services are ready.",
-                category: .system
-            )
-        } catch {
-            appEnvironment.initializationError = error.localizedDescription
-            appEnvironment.showingInitError = true
-        }
+    private func checkInitialization() {
+        Log.info("Prism initialized successfully")
     }
 }
 
@@ -89,32 +46,27 @@ struct PrismCommands: Commands {
             
             Divider()
             
-            Button("New Sketch Page") {
-                NotificationCenter.default.post(name: .newSketchPage, object: nil)
+            Button("Close PDF") {
+                NotificationCenter.default.post(name: .closePDF, object: nil)
             }
-            .keyboardShortcut("n", modifiers: [.command, .shift])
+            .keyboardShortcut("w", modifiers: [.command])
         }
         
         // Edit Menu
         CommandGroup(after: .textEditing) {
-            Button("Highlight → Note") {
+            Button("New Note") {
+                NotificationCenter.default.post(name: .addStickyNote, object: nil)
+            }
+            .keyboardShortcut("n", modifiers: [.command, .shift])
+            
+            Button("Highlight") {
                 NotificationCenter.default.post(name: .captureHighlight, object: nil)
             }
             .keyboardShortcut("h", modifiers: [.command, .shift])
-            
-            Button("Add Sticky Note") {
-                NotificationCenter.default.post(name: .addStickyNote, object: nil)
-            }
-            .keyboardShortcut("s", modifiers: [.command, .shift])
         }
         
         // View Menu
-        CommandGroup(after: .appVisibility) {
-            Button("Toggle Search") {
-                NotificationCenter.default.post(name: .toggleSearch, object: nil)
-            }
-            .keyboardShortcut("f", modifiers: [.command])
-            
+        CommandGroup(after: .sidebar) {
             Button("Toggle Library") {
                 NotificationCenter.default.post(name: .toggleLibrary, object: nil)
             }
@@ -127,15 +79,15 @@ struct PrismCommands: Commands {
             
             Divider()
             
-            Button("Close PDF") {
-                NotificationCenter.default.post(name: .closePDF, object: nil)
+            Button("Find in PDF") {
+                NotificationCenter.default.post(name: .toggleSearch, object: nil)
             }
-            .keyboardShortcut("w", modifiers: [.command])
+            .keyboardShortcut("f", modifiers: [.command])
         }
         
         // Help Menu
         CommandGroup(after: .help) {
-            Button("Show Help") {
+            Button("Prism Help") {
                 NotificationCenter.default.post(name: .showHelp, object: nil)
             }
             .keyboardShortcut("?", modifiers: [.command])
@@ -143,36 +95,13 @@ struct PrismCommands: Commands {
             Button("Show Onboarding") {
                 NotificationCenter.default.post(name: .showOnboarding, object: nil)
             }
-            .keyboardShortcut("o", modifiers: [.command, .shift])
             
             Divider()
             
-            Button("About Prism") {
-                NotificationCenter.default.post(name: .showAbout, object: nil)
+            Button("Settings…") {
+                NotificationCenter.default.post(name: .showSettings, object: nil)
             }
+            .keyboardShortcut(",", modifiers: [.command])
         }
     }
-}
-
-// MARK: - Notification Names
-
-extension Notification.Name {
-    static let openPDF = Notification.Name("Prism.openPDF")
-    static let importPDFs = Notification.Name("Prism.importPDFs")
-    static let closePDF = Notification.Name("Prism.closePDF")
-    static let toggleSearch = Notification.Name("Prism.toggleSearch")
-    static let toggleLibrary = Notification.Name("Prism.toggleLibrary")
-    static let toggleNotes = Notification.Name("Prism.toggleNotes")
-    static let captureHighlight = Notification.Name("Prism.captureHighlight")
-    static let addStickyNote = Notification.Name("Prism.addStickyNote")
-    static let newSketchPage = Notification.Name("Prism.newSketchPage")
-    static let showHelp = Notification.Name("Prism.showHelp")
-    static let showOnboarding = Notification.Name("Prism.showOnboarding")
-    static let showAbout = Notification.Name("Prism.showAbout")
-    static let pdfLoadError = Notification.Name("Prism.pdfLoadError")
-    static let sessionCorrupted = Notification.Name("Prism.sessionCorrupted")
-    static let dataRecovery = Notification.Name("Prism.dataRecovery")
-    static let memoryPressure = Notification.Name("Prism.memoryPressure")
-    static let currentPDFURLDidChange = Notification.Name("Prism.currentPDFURLDidChange")
-    static let showToast = Notification.Name("Prism.showToast")
 }

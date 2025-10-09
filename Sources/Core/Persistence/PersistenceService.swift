@@ -312,3 +312,20 @@ final class FileBasedPersistenceService: PersistenceServiceProtocol {
         }
     }
 }
+
+// MARK: - UserDefaults Codable Helpers (for WebPane bookmarks)
+
+extension FileBasedPersistenceService {
+    static func loadCodable<T: Codable>(_ type: T.Type, forKey key: String) -> T? {
+        guard let data = UserDefaults.standard.data(forKey: key) else { return nil }
+        return try? JSONDecoder().decode(T.self, from: data)
+    }
+    
+    static func saveCodable<T: Codable>(_ value: T, forKey key: String) {
+        let data = try? JSONEncoder().encode(value)
+        UserDefaults.standard.set(data, forKey: key)
+    }
+}
+
+// Type alias for compatibility with WebPane
+typealias PersistenceService = FileBasedPersistenceService

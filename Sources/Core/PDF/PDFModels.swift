@@ -1,5 +1,6 @@
 import Foundation
 import PDFKit
+import AppKit
 
 // MARK: - PDF Document Info
 
@@ -84,16 +85,16 @@ struct PDFRenderOptions {
     var displayMode: PDFDisplayMode
     var displayDirection: PDFDisplayDirection
     var displaysPageBreaks: Bool
-    var pageBreakMargins: UIEdgeInsets
-    var backgroundColor: UIColor
+    var pageBreakMargins: NSEdgeInsets
+    var backgroundColor: NSColor
     var interpolationQuality: CGInterpolationQuality
     
     static let `default` = PDFRenderOptions(
         displayMode: .singlePageContinuous,
         displayDirection: .vertical,
         displaysPageBreaks: true,
-        pageBreakMargins: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10),
-        backgroundColor: .systemBackground,
+        pageBreakMargins: NSEdgeInsets(top: 10, left: 10, bottom: 10, right: 10),
+        backgroundColor: .textBackgroundColor,
         interpolationQuality: .high
     )
 }
@@ -124,10 +125,10 @@ struct PDFViewState: Equatable {
 
 struct PDFThumbnail: Identifiable {
     let id: Int // Page number
-    let image: UIImage
+    let image: NSImage
     let pageNumber: Int
     
-    init(pageNumber: Int, image: UIImage) {
+    init(pageNumber: Int, image: NSImage) {
         self.id = pageNumber
         self.pageNumber = pageNumber
         self.image = image
@@ -140,8 +141,8 @@ struct AnnotationOverlay: Identifiable, Equatable {
     let id: UUID
     let type: AnnotationType
     let rect: CGRect
-    let color: UIColor
-    let path: UIBezierPath?
+    let color: NSColor
+    let path: NSBezierPath?
     let alpha: CGFloat
     
     init(from annotation: Annotation) {
@@ -149,8 +150,8 @@ struct AnnotationOverlay: Identifiable, Equatable {
         self.type = annotation.type
         self.rect = annotation.rect
         
-        // Convert AnnotationColor to UIColor
-        self.color = UIColor(
+        // Convert AnnotationColor to NSColor
+        self.color = NSColor(
             red: annotation.color.red,
             green: annotation.color.green,
             blue: annotation.color.blue,
@@ -162,7 +163,7 @@ struct AnnotationOverlay: Identifiable, Equatable {
         // Deserialize bezier path if present
         if let pathString = annotation.bezierPath,
            let data = pathString.data(using: .utf8),
-           let path = try? NSKeyedUnarchiver.unarchivedObject(ofClass: UIBezierPath.self, from: data) {
+           let path = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSBezierPath.self, from: data) {
             self.path = path
         } else {
             self.path = nil
